@@ -6,5 +6,6 @@
     <string name="app_name">AskApp</string>
     <string name="hint_keyword">想問什麼呢？</string>
     <string name="btn_search">搜尋</string>
+    <string name="info_not_found">抱歉！我不知道耶。</string>
     
 </resources>

@@ -9,6 +9,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,11 +50,17 @@ public class MainActivity extends ActionBarActivity {
         });
     }
 
-    private void searchKeyword(String keyword){
+    private void searchKeyword(String keyword) {
 
         // Set header
         Map<String, String> header = new HashMap<>();
         header.put("Accept", "application/json");
+
+        try {
+            keyword = URLEncoder.encode(keyword, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
         restMgr.getResource(Definition.class, keyword, null, header, new RestManager.GetResourceListener<Definition>() {
             @Override
@@ -74,8 +82,9 @@ public class MainActivity extends ActionBarActivity {
 
                 progressBar.setVisibility(View.INVISIBLE);
 
-                if(code == 404)
-                    Toast.makeText(MainActivity.this, "Sorry, I don't know.", Toast.LENGTH_SHORT).show();
+                if (code == 404)
+                    Toast.makeText(MainActivity.this, getString(R.string.info_not_found),
+                            Toast.LENGTH_SHORT).show();
             }
         }, null);
     }
