@@ -84,35 +84,6 @@ public class RestManager {
         return loc.substring(loc.lastIndexOf("/") + 1);
     }
 
-    public void cancelAll(String tag) {
-        reqQueue.cancelAll(tag);
-    }
-
-    public void clearCache() {
-        reqQueue.getCache().clear();
-    }
-
-    public <T extends Resource> void getResource(final Class<T> cls, String id, Map<String, String> params, Map<String, String> header,
-                                                 final GetResourceListener<T> listener, String tag,
-                                                 Resource... parents) {
-        try {
-            Log.d(TAG, "Getting resource from " + getResourceUrl(cls, id, parents) + "...");
-            GsonRequest<T> req = new GsonRequest<T>(getResourceUrl(cls, id, parents), params, header, cls,
-                    new Response.Listener<GsonResponse<T>>() {
-                        @Override
-                        public void onResponse(GsonResponse<T> gRes) {
-                            Log.d(TAG, "Response: " + gRes);
-                            if (listener != null) listener.onResponse(gRes.getCode(),
-                                    gRes.getHeaders(), gRes.getBody());
-                        }
-                    }, new RestErrorListener(listener));
-            req.setTag(tag);
-            reqQueue.add(req);
-        } catch (Exception e) {
-            listener.onError(e.getMessage(), e, 0, null);
-        }
-    }
-
     /**
      * Get an {@link SSLContext} that trusts the self-signed certificate from StrikeUp servers.
      * <p/>
@@ -151,6 +122,35 @@ public class RestManager {
         SSLContext context = SSLContext.getInstance("TLS");
         context.init(null, tmf.getTrustManagers(), null);
         return context;
+    }
+
+    public void cancelAll(String tag) {
+        reqQueue.cancelAll(tag);
+    }
+
+    public void clearCache() {
+        reqQueue.getCache().clear();
+    }
+
+    public <T extends Resource> void getResource(final Class<T> cls, String id, Map<String, String> params, Map<String, String> header,
+                                                 final GetResourceListener<T> listener, String tag,
+                                                 Resource... parents) {
+        try {
+            Log.d(TAG, "Getting resource from " + getResourceUrl(cls, id, parents) + "...");
+            GsonRequest<T> req = new GsonRequest<T>(getResourceUrl(cls, id, parents), params, header, cls,
+                    new Response.Listener<GsonResponse<T>>() {
+                        @Override
+                        public void onResponse(GsonResponse<T> gRes) {
+                            Log.d(TAG, "Response: " + gRes);
+                            if (listener != null) listener.onResponse(gRes.getCode(),
+                                    gRes.getHeaders(), gRes.getBody());
+                        }
+                    }, new RestErrorListener(listener));
+            req.setTag(tag);
+            reqQueue.add(req);
+        } catch (Exception e) {
+            listener.onError(e.getMessage(), e, 0, null);
+        }
     }
 
     public <T extends Resource> void listResource(Class<T> elemCls, Map<String, String> params,
@@ -257,7 +257,7 @@ public class RestManager {
     }
 
     /**
-     * TODO handle TAG
+     *
      *
      * @param cls
      * @param image
@@ -388,7 +388,6 @@ public class RestManager {
         HttpURLConnection.setFollowRedirects(false);
         HttpsURLConnection.setFollowRedirects(false);
 
-        // TODO get .crt file from server
         //HttpsURLConnection.setDefaultSSLSocketFactory(getSslContext(...).getSocketFactory());
 
         // Setup an HTTP stack that uses HttpURLConnection
