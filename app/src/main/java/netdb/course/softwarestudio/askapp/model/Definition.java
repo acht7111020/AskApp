@@ -8,7 +8,7 @@ public class Definition extends Resource{
     private String description;
 
     public static String getCollectionName() {
-        return "definition";
+        return "definitions";
     }
 
     public String getTitle() {
