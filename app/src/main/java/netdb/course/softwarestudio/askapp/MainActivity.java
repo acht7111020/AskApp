@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,8 +46,16 @@ public class MainActivity extends ActionBarActivity {
         searchBtn.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
-                searchKeyword(keywordEdt.getText().toString());
+                String keyword = keywordEdt.getText().toString().replaceAll("\\s", "");
+                if (keyword.length() != 0) {
+                    // send a search request
+                    progressBar.setVisibility(View.VISIBLE);
+                    searchKeyword(keyword);
+                } else {
+                    // clear results
+                    titleTxt.setText("");
+                    descriptionTxt.setText("");
+                }
             }
         });
     }
@@ -58,8 +67,8 @@ public class MainActivity extends ActionBarActivity {
         header.put("Accept", "application/json");
 
         try {
-            keyword = URLEncoder.encode(keyword, "UTF-8");
-	        Log.d("TAG", keyword);
+            keyword = URLEncoder.encode(keyword, StandardCharsets.UTF_8.name());
+            Log.d("TAG", keyword);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
