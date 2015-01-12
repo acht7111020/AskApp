@@ -63,4 +63,17 @@
         android:visibility="invisible"
         android:id="@+id/pgsb_loading" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="顯示更多評論"
+        android:id="@+id/moreComment"
+        android:layout_gravity="center_horizontal|bottom" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="263dp"
+        android:id="@+id/commentView"
+        android:layout_gravity="left|bottom" />
+
 </FrameLayout>

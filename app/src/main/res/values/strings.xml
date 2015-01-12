@@ -2,10 +2,12 @@
 <resources>
 
     <string name="rest_server_url">http://netdb-asksite.appspot.com/</string>
-
     <string name="app_name">AskApp</string>
     <string name="hint_keyword">想問什麼呢？</string>
     <string name="btn_search">搜尋</string>
     <string name="info_not_found">抱歉！我不知道耶。</string>
-    
+    <string name="title_activity_comment">CommentActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
 </resources>

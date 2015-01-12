@@ -1,11 +1,15 @@
 package netdb.course.softwarestudio.askapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,9 +30,13 @@ public class MainActivity extends ActionBarActivity {
 
     private EditText keywordEdt;
     private Button searchBtn;
+    private Button morecommentBtn;
     private TextView titleTxt;
     private TextView descriptionTxt;
     private ProgressBar progressBar;
+    private ListView listView;
+    private ArrayAdapter<String> listAdapter;
+    private Definition def;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +47,11 @@ public class MainActivity extends ActionBarActivity {
 
         keywordEdt = (EditText) findViewById(R.id.edt_keyword);
         searchBtn = (Button) findViewById(R.id.btn_search);
+        morecommentBtn = (Button) findViewById(R.id.moreComment);
         titleTxt = (TextView) findViewById(R.id.txt_title);
         descriptionTxt = (TextView) findViewById(R.id.txt_description);
         progressBar = (ProgressBar) findViewById(R.id.pgsb_loading);
-
+        listView = (ListView)findViewById(R.id.commentView);
         searchBtn.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,6 +60,7 @@ public class MainActivity extends ActionBarActivity {
                     // send a search request
                     progressBar.setVisibility(View.VISIBLE);
                     searchKeyword(keyword);
+
                 } else {
                     // clear results
                     titleTxt.setText("");
@@ -58,6 +68,25 @@ public class MainActivity extends ActionBarActivity {
                 }
             }
         });
+
+        if(def!=null){
+            listAdapter = new ArrayAdapter(this ,android.R.layout.simple_list_item_1,def.getComment());
+            listView.setAdapter(listAdapter);
+
+        }
+
+        morecommentBtn.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                goComment();
+            }
+        });
+
+    }
+    private void goComment(){
+        Intent intent = new Intent(this ,CommentActivity.class);
+        //startActivity(intent);
+        startActivity(intent);
     }
 
     private void searchKeyword(String keyword) {
@@ -76,11 +105,13 @@ public class MainActivity extends ActionBarActivity {
         restMgr.getResource(Definition.class, keyword, null, header, new RestManager.GetResourceListener<Definition>() {
             @Override
             public void onResponse(int code, Map<String, String> headers, Definition resource) {
-
+                def = resource;
                 progressBar.setVisibility(View.INVISIBLE);
 
                 titleTxt.setText(resource.getTitle());
                 descriptionTxt.setText(resource.getDescription());
+
+
             }
 
             @Override
