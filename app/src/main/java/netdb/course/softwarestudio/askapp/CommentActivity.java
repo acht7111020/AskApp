@@ -26,7 +26,8 @@ public class CommentActivity extends ActionBarActivity {
     private RestManager mRestMgr;
     private Button mPostBtn;
     private EditText mWrite;
-    private Definition def;
+
+    private String[] list = {"打不完啦","WOOOWOWOW","QQQQQQ"};
     private ArrayAdapter<String> listAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,8 @@ public class CommentActivity extends ActionBarActivity {
         listView = (ListView)findViewById(R.id.listViewall);
         mPostBtn = (Button)findViewById(R.id.postcomment);
         mWrite = (EditText)findViewById(R.id.comment);
+        listAdapter = new ArrayAdapter(this ,android.R.layout.simple_list_item_1,list);
+        listView.setAdapter(listAdapter);
         mPostBtn.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -48,7 +51,7 @@ public class CommentActivity extends ActionBarActivity {
 
     private void postComment(String comment) {
 
-        def = new Definition();
+        final Definition def = new Definition();
         def.setComment(comment);
         mRestMgr.postResource(Definition.class, def, new RestManager.PostResourceListener<Definition>() {
             @Override
