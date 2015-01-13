@@ -1,5 +1,6 @@
 package netdb.course.softwarestudio.askapp.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import netdb.course.softwarestudio.askapp.service.rest.model.Resource;
@@ -8,7 +9,7 @@ public class Definition extends Resource{
 
     private String title;
     private String description;
-    private List<String> comment;
+    private List<String> comment = new ArrayList<>();
 
     public static String getCollectionName() {
         return "definitions";
