@@ -8,10 +8,17 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        >
+
     <ScrollView
+        android:layout_gravity="top"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center">
+        android:layout_height="250dp"
+        android:id="@+id/scrollview"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,24 +63,42 @@
         </LinearLayout>
     </ScrollView>
 
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="invisible"
-        android:id="@+id/pgsb_loading" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="顯示更多評論"
-        android:id="@+id/moreComment"
-        android:layout_gravity="center_horizontal|bottom" />
+         <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="invisible"
+            android:id="@+id/pgsb_loading" />
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="263dp"
-        android:id="@+id/commentView"
-        android:layout_gravity="left|bottom" />
+        <ListView
 
+            android:layout_width="wrap_content"
+            android:layout_height="180dp"
+            android:id="@+id/commentView"
+            android:layout_below="@+id/scrollview"
+               />
+
+        <Button
+            android:visibility="invisible"
+            android:editable="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SEND"
+            android:id="@+id/sendComment"
+            android:layout_below="@+id/commentView"
+            android:layout_alignParentEnd="true" />
+
+        <EditText
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/WriteComment"
+            android:hint="說點什麼吧耶~~~"
+            android:layout_below="@+id/commentView"
+            android:layout_alignParentStart="true" />
+
+    </RelativeLayout>
 </FrameLayout>
+
+

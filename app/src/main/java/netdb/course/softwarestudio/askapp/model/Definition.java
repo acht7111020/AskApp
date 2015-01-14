@@ -8,8 +8,13 @@ public class Definition extends Resource{
 
     private String title;
     private String description;
-    private List<String> comment;
+    private List<String> comments;
 
+    public Definition(String title,String description,List<String> comments){
+        this.title = title;
+        this.description = description;
+        this.comments = comments;
+    }
     public static String getCollectionName() {
         return "definitions";
     }
@@ -22,8 +27,10 @@ public class Definition extends Resource{
         this.title = title;
     }
 
-    public void setComment(String com) {
-        this.comment.add(com);
+    public void setComment(List<String> com) { this.comments=com; }
+
+    public void addComment(String com){
+        comments.add(com);
     }
 
     public String getDescription() {
@@ -31,7 +38,7 @@ public class Definition extends Resource{
     }
 
     public List<String> getComment() {
-        return comment;
+        return comments;
     }
 
     public void setDescription(String description) {
